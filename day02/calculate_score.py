@@ -20,19 +20,19 @@ def convert_raw_to_moves(raw: str) -> Moves:
     else:
         Exception("UnknownMoveException")
 
-def get_result(player_1_move: Moves, player_2_move: Moves) -> Result:
+def get_result_for_player_2(player_1_move: Moves, player_2_move: Moves) -> Result:
     if player_1_move == player_2_move:
         return Result.DRAW
     elif (player_1_move == Moves.ROCK and player_2_move == Moves.SCISSORS) or (player_1_move == Moves.PAPER and player_2_move == Moves.ROCK) or (player_1_move == Moves.SCISSORS and player_2_move == Moves.PAPER):
-        return Result.WIN
-    else:
         return Result.LOSS
+    else:
+        return Result.WIN
 
-def player_1_score(player_1_raw_move: str, player_2_raw_move: str) -> int:
+def player_2_score(player_1_raw_move: str, player_2_raw_move: str) -> int:
     player_1_move = convert_raw_to_moves(player_1_raw_move)
     player_2_move = convert_raw_to_moves(player_2_raw_move)
-    result = get_result(player_1_move, player_2_move)
-    return player_1_move.value + result.value
+    result = get_result_for_player_2(player_1_move, player_2_move)
+    return player_2_move.value + result.value
 
 
 if __name__ == "__main__":
@@ -41,5 +41,5 @@ if __name__ == "__main__":
     # file = "input.txt"
     with open(file) as f:
         for line in f.readlines():
-            total_score += player_1_score(*line.strip().split(" "))
+            total_score += player_2_score(*line.strip().split(" "))
     print(total_score)
