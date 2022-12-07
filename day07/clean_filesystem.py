@@ -77,7 +77,7 @@ if __name__ == "__main__":
     print("Part 1: ", sum([dir.size for dir in dirs_to_remove]))
 
     print("Total used space: ", tree_root.size)
-    space_to_be_freed = abs(TARGET_FREE_SPACE - tree_root.size)
+    space_to_be_freed = abs((TOTAL_FILE_SYSTEM_CAPACITY - TARGET_FREE_SPACE) - tree_root.size)
     print("Space to be freed: ", space_to_be_freed)
     # print(find_dirs_above_size_limit(tree_root, space_to_be_freed))
     print("Part 2: ", min([dir.size for dir in find_dirs_above_size_limit(tree_root, space_to_be_freed)]))
