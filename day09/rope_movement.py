@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, FileType
 from dataclasses import dataclass
-from enum import Enum, unique
+from enum import Enum
 from typing import List
 
 class Direction(Enum):
@@ -73,3 +73,18 @@ if __name__ == "__main__":
                 history_of_tail_positions.append(tail_position)
 
     print("Part 1: ", len(unique(history_of_tail_positions)))
+
+    full_rope = [Position(0, 0), Position(0, 0), Position(0, 0), Position(0, 0), Position(0, 0), Position(0, 0), Position(0, 0), Position(0, 0), Position(0, 0), Position(0, 0)]
+    history_of_tail_positions = [full_rope[-1]]
+    for move in moves:
+        raw_direction, raw_amplitude = move.split(" ")
+        amplitude = int(raw_amplitude)
+        direction = convert_raw_dir_to_dir(raw_direction)
+        for i in range(amplitude):
+            full_rope[0] = move_head(full_rope[0], direction)
+            for index in range(1, len(full_rope)):
+                if should_tail_move(full_rope[index-1], full_rope[index]):
+                    full_rope[index] = move_tail(full_rope[index-1], full_rope[index])
+            history_of_tail_positions.append(full_rope[-1])
+
+    print("Part 2: ", len(unique(history_of_tail_positions)))
