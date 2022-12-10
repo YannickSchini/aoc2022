@@ -23,6 +23,13 @@ def get_signal_strength(cpu_cycle: int, register: int) -> int:
     return cpu_cycle * register
 
 
+def render_screen(screen: List[List[str]]) -> None:
+    print("#"*40)
+    for line in screen:
+        print("".join(line))
+    print("#"*40)
+
+
 if __name__ == "__main__":
     parser = ArgumentParser(prog="cpu_cycles", description="Calculate register value for each CPU cycle")
     parser.add_argument("filename", type=FileType("r"))
@@ -47,3 +54,26 @@ if __name__ == "__main__":
         if cpu_cycle > max(register_value_changes.keys()):
             break
     print("Part 1: ", signal_strength)
+
+    SCREEN_WIDTH = 40
+    SCREEN_HEIGTH = 6
+    screen = [["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+        ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+        ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+        ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+        ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+        ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]]
+
+    cpu_cycle = 0
+    sprite_position = 1
+    while cpu_cycle < SCREEN_WIDTH * SCREEN_HEIGTH:
+        try:
+            sprite_position = register_value_changes[cpu_cycle + 1]
+        except KeyError:
+            pass
+        if cpu_cycle % SCREEN_WIDTH in [sprite_position - 1, sprite_position, sprite_position + 1]:
+            screen[cpu_cycle // SCREEN_WIDTH][cpu_cycle % SCREEN_WIDTH] = "."
+        line_number = cpu_cycle // SCREEN_WIDTH
+        col_number = cpu_cycle % SCREEN_WIDTH
+        cpu_cycle += 1
+    render_screen(screen)
