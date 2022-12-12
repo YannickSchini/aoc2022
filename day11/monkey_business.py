@@ -13,7 +13,7 @@ if __name__ == "__main__":
     for raw_monkey in raw_monkeys:
         monkeys.append(Monkey(raw_monkey.split("\n")))
 
-    for round in range(20):
+    for round in range(10000):
         for monkey in monkeys:
             # print(f"\n\n Monkey {monkey.name}’s turn with the following items !!\n{monkey.starting_items}")
             monkey.turn()

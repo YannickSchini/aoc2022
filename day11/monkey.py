@@ -65,7 +65,7 @@ class Monkey:
             # print("Current item/stress lvl before inspection: ", item)
             stress_lvl_due_to_inspection = self.increase_stress(item)
             # print("Current item/stress lvl after inspection: ", stress_lvl_due_to_inspection)
-            stress_lvl_after_relief = stress_lvl_due_to_inspection//3
+            stress_lvl_after_relief = stress_lvl_due_to_inspection % (17*13*19*7*11*3*2*5)
             # print("Current item/stress lvl after relief: ", stress_lvl_after_relief)
             target = self.get_target(stress_lvl_after_relief)
             # print(f"Target monkey {target} for the item {stress_lvl_after_relief}")
